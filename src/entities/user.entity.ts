@@ -10,7 +10,7 @@ import {
   Unique,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { Exclude } from 'class-transformer';
+import { Exclude, instanceToPlain } from 'class-transformer';
 import { License } from './license.entity';
 
 @Entity({ name: 'user' })
@@ -73,6 +73,10 @@ export class User extends BaseEntity {
     const hash = await bcrypt.compare(password, this.password);
 
     return hash;
+  }
+
+  toJSON() {
+    return instanceToPlain(this);
   }
 }
 

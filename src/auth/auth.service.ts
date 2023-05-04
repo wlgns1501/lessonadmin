@@ -32,35 +32,34 @@ export class AuthService {
 
   @Transactional()
   async signUp(signUpDto: SignUpDto) {
-    try {
-      this.authRepository = this.connection.getCustomRepository(AuthRepository);
-      await this.authRepository.signUp(signUpDto);
+    this.authRepository = this.connection.getCustomRepository(AuthRepository);
 
-      return { success: true };
-    } catch (error) {
-      switch (error.code) {
-        case POSTGRES_ERROR_CODE.DUPLICATED_KEY_ERROR:
-          if (error.detail.includes('email')) {
-            throw new HttpException(
-              {
-                message: HTTP_ERROR.DUPLICATED_KEY_ERROR,
-                detail: '중복된 이메일입니다.',
-              },
-              HttpStatus.BAD_REQUEST,
-            );
-          } else if (error.detail.includes('nickname')) {
-            throw new HttpException(
-              {
-                message: HTTP_ERROR.DUPLICATED_KEY_ERROR,
-                detail: '중복된 닉네임입니다.',
-              },
-              HttpStatus.BAD_REQUEST,
-            );
-          }
-      }
+    await this.authRepository.signUp(signUpDto);
+    return { success: true };
+    // catch (error) {
+    //   switch (error.code) {
+    //     case POSTGRES_ERROR_CODE.DUPLICATED_KEY_ERROR:
+    //       if (error.detail.includes('email')) {
+    //         throw new HttpException(
+    //           {
+    //             message: HTTP_ERROR.DUPLICATED_KEY_ERROR,
+    //             detail: '중복된 이메일입니다.',
+    //           },
+    //           HttpStatus.BAD_REQUEST,
+    //         );
+    //       } else if (error.detail.includes('nickname')) {
+    //         throw new HttpException(
+    //           {
+    //             message: HTTP_ERROR.DUPLICATED_KEY_ERROR,
+    //             detail: '중복된 닉네임입니다.',
+    //           },
+    //           HttpStatus.BAD_REQUEST,
+    //         );
+    //       }
+    //   }
 
-      console.error();
-    }
+    //   console.error();
+    // }
   }
 
   async signIn(signInDto: SignInDto) {

@@ -4,9 +4,12 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
+import { LicenseModule } from './license/license.module';
+// import typeOrmConfig from 'ormconfig';
 
 @Module({
   imports: [
+    // TypeOrmModule.forRoot(typeOrmConfig),
     ConfigModule.forRoot({ isGlobal: true, envFilePath: 'config/.env' }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -27,6 +30,7 @@ import { AuthModule } from './auth/auth.module';
       },
     }),
     AuthModule,
+    LicenseModule,
   ],
   controllers: [AppController],
   providers: [AppService],

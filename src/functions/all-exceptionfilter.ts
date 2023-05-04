@@ -24,7 +24,7 @@ export class CustomExceptionFilter implements ExceptionFilter {
   catch(exception: Error, host: ArgumentsHost) {
     let body: ApiError;
     let status: HttpStatus;
-    console.log(exception);
+    // console.log(exception);
 
     if (exception instanceof BusinessException) {
       body = {
@@ -36,7 +36,7 @@ export class CustomExceptionFilter implements ExceptionFilter {
       status = exception.status;
     } else if (exception instanceof HttpException) {
       body = new BusinessException(
-        'generic',
+        'admin',
         exception.message,
         exception.getResponse(),
         exception.getStatus(),
@@ -45,7 +45,7 @@ export class CustomExceptionFilter implements ExceptionFilter {
       status = exception.getStatus();
     } else {
       body = new BusinessException(
-        'generic',
+        'admin',
         `Internal error occurred: ${exception.message}`,
         'Internal error occurred',
         HttpStatus.INTERNAL_SERVER_ERROR,
