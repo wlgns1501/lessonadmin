@@ -24,7 +24,7 @@ export class CustomExceptionFilter implements ExceptionFilter {
   catch(exception: Error, host: ArgumentsHost) {
     let body: ApiError;
     let status: HttpStatus;
-    // console.log(exception);
+    console.log(exception);
 
     if (exception instanceof BusinessException) {
       body = {

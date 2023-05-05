@@ -42,7 +42,7 @@ export class LicenseController {
   @ApiOperation({ summary: '라이센스 인증하기' })
   @UseGuards(AdminGuard)
   async changeActiveLicense(@Param('licenseId') licenseId: number) {
-    return this.service.changeActvieLicense(licenseId);
+    return this.service.changeActiveLicense(licenseId);
   }
 
   @Post(':licenseId/refused')

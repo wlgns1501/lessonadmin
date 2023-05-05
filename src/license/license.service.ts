@@ -3,6 +3,7 @@ import { LicenseRepository } from 'src/repositories/license.repository';
 import { Connection } from 'typeorm';
 import { GetLicensesDto } from './dtos/getLicensesDto';
 import { HTTP_ERROR } from 'src/constants/http-error';
+import { UserRepository } from 'src/repositories/user.repository';
 
 export const LICENSE_STATUS_TYPE = {
   ACTIVE: 'ACTIVE',
@@ -12,6 +13,8 @@ export const LICENSE_STATUS_TYPE = {
 @Injectable()
 export class LicenseService {
   private licenseRepository: LicenseRepository;
+  private userRepository: UserRepository;
+
   constructor(private readonly connection: Connection) {}
 
   async getLicenseList(getLicensesDto: GetLicensesDto) {
@@ -44,9 +47,10 @@ export class LicenseService {
     return license;
   }
 
-  async changeActvieLicense(licenseId: number) {
+  async changeActiveLicense(licenseId: number) {
     this.licenseRepository =
       this.connection.getCustomRepository(LicenseRepository);
+    this.userRepository = this.connection.getCustomRepository(UserRepository);
 
     const { generatedMaps, raw, affected } =
       await this.licenseRepository.changeStatusLicense(
@@ -64,12 +68,17 @@ export class LicenseService {
       );
     }
 
+    const [{ userId }] = raw;
+
+    await this.userRepository.changeIsInstructorUser(userId, true);
+
     return { success: true };
   }
 
   async changeRefusedLicense(licenseId: number) {
     this.licenseRepository =
       this.connection.getCustomRepository(LicenseRepository);
+    this.userRepository = this.connection.getCustomRepository(UserRepository);
 
     const { generatedMaps, raw, affected } =
       await this.licenseRepository.changeStatusLicense(
@@ -85,6 +94,16 @@ export class LicenseService {
         },
         HttpStatus.BAD_REQUEST,
       );
+    }
+
+    const [{ userId }] = raw;
+
+    const ActiveLicenses = await this.licenseRepository.getActiveLicenses(
+      userId,
+    );
+
+    if (ActiveLicenses.length === 0) {
+      await this.userRepository.changeIsInstructorUser(userId, false);
     }
 
     return { success: true };

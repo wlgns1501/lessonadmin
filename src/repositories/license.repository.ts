@@ -25,6 +25,18 @@ export class LicenseRepository extends BaseRepository<License> {
   }
 
   async changeStatusLicense(licenseId: number, status: string) {
-    return this.update({ id: licenseId }, { status });
+    return await this.createQueryBuilder('license')
+      .update({ status })
+      .where({ id: licenseId })
+      .returning('*')
+      .execute();
+  }
+
+  async getActiveLicenses(userId: number) {
+    return await this.createQueryBuilder('license')
+      .leftJoinAndSelect('license.user', 'user')
+      .where('user.id = :userId', { userId })
+      .andWhere({ status: 'ACTIVE' })
+      .getMany();
   }
 }
