@@ -5,16 +5,16 @@ import {
   Injectable,
   PipeTransform,
 } from '@nestjs/common';
+import { UpdateCategoryDto } from './updateCategory.dto';
 import * as Joi from 'joi';
-import { HTTP_ERROR } from 'src/constants/http-error';
 import { SCHEMA } from 'src/constants/schema';
+import { HTTP_ERROR } from 'src/constants/http-error';
 
 @Injectable()
-export class getLicensesPipe implements PipeTransform {
-  transform(value: any) {
+export class UpdateCategoryPipe implements PipeTransform<UpdateCategoryDto> {
+  transform(value: UpdateCategoryDto) {
     const validationSchema = Joi.object({
-      page: SCHEMA.PAGE(),
-      pageSize: SCHEMA.PAGE_SIZE(),
+      name: SCHEMA.UPDATE_NOTNULL_STRING('카테고리 명'),
     });
 
     const { error, value: validatedValue } = validationSchema.validate(value);
@@ -28,6 +28,7 @@ export class getLicensesPipe implements PipeTransform {
         HttpStatus.BAD_REQUEST,
       );
     }
+
     return validatedValue;
   }
 }

@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { LicenseModule } from './license/license.module';
+import { CategoryModule } from './category/category.module';
+import { SubCategoryModule } from './sub_category/sub_category.module';
 // import typeOrmConfig from 'ormconfig';
 
 @Module({
@@ -31,6 +33,8 @@ import { LicenseModule } from './license/license.module';
     }),
     AuthModule,
     LicenseModule,
+    CategoryModule,
+    SubCategoryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
