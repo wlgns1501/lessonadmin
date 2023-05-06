@@ -36,11 +36,11 @@ export class SubCategoryService {
     const category = await this.categoryRepository.getCategory(categoryId);
 
     try {
-      const subCategory = await this.subCategoryRepository.createSubCategory(
+      const { raw } = await this.subCategoryRepository.createSubCategory(
         name,
         category,
       );
-
+      const [subCategory] = raw;
       return subCategory;
     } catch (error) {
       switch (error.code) {

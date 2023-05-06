@@ -8,11 +8,13 @@ import {
   ManyToOne,
   OneToOne,
   PrimaryGeneratedColumn,
+  Unique,
 } from 'typeorm';
 import { User } from './user.entity';
 import { Category } from './category.entity';
 
 @Entity({ name: 'license' })
+@Unique(['imageUrl', 'category'])
 export class License extends BaseEntity {
   @PrimaryGeneratedColumn({ name: 'id', comment: 'PK' })
   @ApiProperty({ description: 'id' })
