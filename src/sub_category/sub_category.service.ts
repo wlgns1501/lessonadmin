@@ -119,4 +119,15 @@ export class SubCategoryService {
       }
     }
   }
+
+  @Transactional()
+  async deleteSubCategory(subCategoryId: number) {
+    this.subCategoryRepository = this.connection.getCustomRepository(
+      SubCategoryRepository,
+    );
+
+    await this.subCategoryRepository.deleteSubCategory(subCategoryId);
+
+    return { success: true };
+  }
 }

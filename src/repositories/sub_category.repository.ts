@@ -40,4 +40,12 @@ export class SubCategoryRepository extends BaseRepository<SubCategory> {
       .returning('*')
       .execute();
   }
+
+  async deleteSubCategory(subCategoryId: number) {
+    return await this.createQueryBuilder()
+      .delete()
+      .from(SubCategory)
+      .where({ id: subCategoryId })
+      .execute();
+  }
 }

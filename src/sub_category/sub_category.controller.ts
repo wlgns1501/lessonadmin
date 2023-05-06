@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpStatus,
@@ -59,5 +60,13 @@ export class SubCategoryController {
     updateSubCategoryDto: UpdateSubCategoryDto,
   ) {
     return this.service.updateSubCategory(subCategoryId, updateSubCategoryDto);
+  }
+
+  @Delete(':subCategoryId')
+  @ApiOperation({ summary: '서브 카테고리 삭제' })
+  @HttpCode(HttpStatus.OK)
+  @UseGuards(AdminGuard)
+  deleteSubCategory(@Param('subCategoryId') subCategoryId: number) {
+    return this.service.deleteSubCategory(subCategoryId);
   }
 }

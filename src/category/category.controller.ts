@@ -33,7 +33,7 @@ export class CategoryController {
 
   @Post('')
   @HttpCode(HttpStatus.OK)
-  @ApiOperation({ description: '카테고리 리스트' })
+  @ApiOperation({ description: '카테고리 생성' })
   @UseGuards(AdminGuard)
   createCategory(
     @Body(new CreateCategoryPipe()) createCategoryDto: CreateCategoryDto,
