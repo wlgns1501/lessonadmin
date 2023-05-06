@@ -38,7 +38,7 @@ export class SubCategoryService {
     try {
       const subCategory = await this.subCategoryRepository.createSubCategory(
         name,
-        categoryId,
+        category,
       );
 
       return subCategory;
