@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import {
   BaseEntity,
   Column,
@@ -28,3 +28,5 @@ export class SubCategory extends BaseEntity {
   @JoinColumn({ name: 'categoryId' })
   category: Category;
 }
+
+export class SubCategoryInfo extends PickType(SubCategory, ['name']) {}
