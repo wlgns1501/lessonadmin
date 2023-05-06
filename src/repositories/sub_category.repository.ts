@@ -11,13 +11,11 @@ export class SubCategoryRepository extends BaseRepository<SubCategory> {
     return await this.createQueryBuilder('sub_category').getMany();
   }
 
-  async createSubCategory(createSubCategoryDto: CreateSubCategoryDto) {
-    const { name, categoryId } = createSubCategoryDto;
-
+  async createSubCategory(name: string, category: Category) {
     return await this.createQueryBuilder('sub_category')
       .insert()
       .into('sub_category')
-      .values({ name, categoryId })
+      .values({ name, category })
       .returning('*')
       .execute();
   }

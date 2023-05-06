@@ -28,10 +28,17 @@ export class SubCategoryService {
     this.subCategoryRepository = this.connection.getCustomRepository(
       SubCategoryRepository,
     );
+    this.categoryRepository =
+      this.connection.getCustomRepository(CategoryRepository);
+
+    const { name, categoryId } = createSubCategoryDto;
+
+    const category = await this.categoryRepository.getCategory(categoryId);
 
     try {
       const subCategory = await this.subCategoryRepository.createSubCategory(
-        createSubCategoryDto,
+        name,
+        categoryId,
       );
 
       return subCategory;
