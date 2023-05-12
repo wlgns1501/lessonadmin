@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, PickType } from '@nestjs/swagger';
 import {
   BaseEntity,
   Column,
@@ -34,3 +34,5 @@ export class Place extends BaseEntity {
   @OneToMany(() => Lesson, (lesson) => lesson.place)
   lessons: Lesson;
 }
+
+export class PlaceInfo extends PickType(Place, ['name', 'address']) {}
