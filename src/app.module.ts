@@ -7,6 +7,8 @@ import { AuthModule } from './auth/auth.module';
 import { LicenseModule } from './license/license.module';
 import { CategoryModule } from './category/category.module';
 import { SubCategoryModule } from './sub_category/sub_category.module';
+import { LocationModule } from './location/location.module';
+import { PlaceModule } from './place/place.module';
 // import typeOrmConfig from 'ormconfig';
 
 @Module({
@@ -35,6 +37,8 @@ import { SubCategoryModule } from './sub_category/sub_category.module';
     LicenseModule,
     CategoryModule,
     SubCategoryModule,
+    LocationModule,
+    PlaceModule,
   ],
   controllers: [AppController],
   providers: [AppService],
